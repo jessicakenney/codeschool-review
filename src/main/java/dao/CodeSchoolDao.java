@@ -16,7 +16,7 @@ public interface CodeSchoolDao {
     CodeSchool findById(int id);
 
     //update
-    void update(int id, String content);
+    void update(int id, String name);
 
     //delete
     void deleteById(int id);
