@@ -1,0 +1,28 @@
+{{#partial "content"}}
+
+    <h3> CodeSchools </h3>
+
+    {{#if codeSchools}}
+        {{#each codeSchools }}
+            <div class="col-md-4">
+                <div class = "well">
+                    <h3>{{ name }} <small><em><a href="/codeschools/{{ id }}">...edit</a></em></small></h3>
+                    <br>
+                    <a href="/codeschools/{{ id }}/reviews">Show/Add Review</a>
+                    <br>
+                </div>
+            </div>
+
+        {{/each}}
+    {{else}}
+        <p>No Code Schools</p>
+    {{/if}}
+
+    <footer class="footer">
+        <p class="text-muted"><a href="/codeschools/delete">DELETE ALL Code Schools</a></p>
+        </div>
+    </footer>
+
+{{/partial}}
+
+{{> layout.hbs}}

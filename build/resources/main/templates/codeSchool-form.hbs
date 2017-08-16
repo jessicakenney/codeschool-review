@@ -1,0 +1,23 @@
+{{#partial "content"}}
+
+    {{#if editCodeSchool}}
+        <h3>Edit Code School</h3>
+        <form action="/codeschools/{{editCodeSchool.id}}/update" method="post">
+            <label for="name">Edit code School name</label>
+            <input id="name" name="name" type="text" value="{{editCodeSchool.name}}">
+
+    {{else}}
+            <h3>Add a new Code School</h3>
+
+        <form action="/codeschools/new" method="post">
+            <label for="name">Code School Name</label>
+            <input id="name" name="name" type="text">
+
+    {{/if}}
+        <button type="submit" class="btn btn-default">Add</button>
+    </form>
+
+
+{{/partial}}
+
+{{> layout.hbs}}

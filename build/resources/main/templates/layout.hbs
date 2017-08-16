@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{#block "title"}}CodeSchool{{/block}}</title>
+
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='css/main.css'>
+
+</head>
+<body>
+<div class="container">
+    <!--begin main template-->
+    <div class="page-header">
+        <img src="/images/codeschool.jpg" width="100%" alt="https://unsplash.com/search/task?photo=Lh_bn9SgRSY">
+        <h1>CodeSchool Review<small>Let's be organized, focused, and efficient.</small></h1>
+    </div>
+
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="/">Home</a></li>
+        <li role="presentation"><a href="/codeschools/new">Add a New CodeSchool</a></li>
+    </ul>
+
+    <div class="row">
+        {{#block "content"}}
+        {{/block}}
+
+    </div>
+</div>
+<!--end main template-->
+{{#block "footer"}}
+    <footer class="footer">
+        <!--<div class="container">-->
+        <!--<p class="text-muted"><a href="/categories/delete">DELETE ALL Categories</a></p>-->
+        <!--</div>-->
+    </footer>
+    </body>
+    </html>
+{{/block}}
