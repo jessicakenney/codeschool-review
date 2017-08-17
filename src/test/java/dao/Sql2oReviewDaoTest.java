@@ -8,6 +8,7 @@ import org.sql2o.Sql2o;
 import org.sql2o.Connection;
 
 
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,13 +37,12 @@ public class Sql2oReviewDaoTest {
 
     //helper
     public Review testReview() {
-        return new Review("Great", 5);
+        return new Review("Great", 5, 1);
     }
 
     @Test
     public void newReviewCanBeFoundById() throws Exception {
          Review newReview = testReview();
-        //Review newReview = new Review("great", 1);
         reviewDao.add(newReview);
         Review foundReview = reviewDao.findById(newReview.getId());
         assertEquals(newReview, foundReview);
@@ -51,8 +51,8 @@ public class Sql2oReviewDaoTest {
     @Test
     public void sizeOfTheDaoIsCorrect_True() throws Exception {
         Review newReview = testReview();
-        Review newReview2 = new Review ("Hack Reactor",4);
-        Review newReview3 = new Review ("Test Code",4);
+        Review newReview2 = new Review ("Super",4,1);
+        Review newReview3 = new Review ("eh",4,1);
         reviewDao.add(newReview);
         reviewDao.add(newReview2);
         reviewDao.add(newReview3);
@@ -70,15 +70,15 @@ public class Sql2oReviewDaoTest {
     public void updateContentOfReviewReturned_True() throws Exception {
         Review newReview = testReview();
         reviewDao.add(newReview);
-        reviewDao.update(1, "EPICODUS",5);
-        assertEquals("EPICODUS", reviewDao.findById(1).getContent());
+        reviewDao.update(1, "great",5, 1);
+        assertEquals("great", reviewDao.findById(1).getContent());
     }
 
     @Test
     public void sizeOfTheDaoIsCorrectAfterDelete_True() throws Exception {
         Review newReview = testReview();
-        Review newReview2 = new Review ("Hack Reactor",4);
-        Review newReview3 = new Review ("Test Code",4);
+        Review newReview2 = new Review ("blah",4,1);
+        Review newReview3 = new Review ("amazin",4,1);
         reviewDao.add(newReview);
         reviewDao.add(newReview2);
         reviewDao.add(newReview3);
@@ -89,13 +89,30 @@ public class Sql2oReviewDaoTest {
     @Test
     public void sizeOfTheDaoIsCorrectAfterDeleteAll_True() throws Exception {
         Review newReview = testReview();
-        Review newReview2 = new Review ("Hack Reactor",4);
-        Review newReview3 = new Review ("Test Code",4);
+        Review newReview2 = new Review ("blah",4,1);
+        Review newReview3 = new Review ("thumbs up",4,1);
         reviewDao.add(newReview);
         reviewDao.add(newReview2);
         reviewDao.add(newReview3);
         reviewDao.clearAllReviews();
         assertEquals(0, reviewDao.getAll().size());
     }
+    @Test
+    public void getReviewByCodeSchoolIdReturnsCorrectly_True() throws Exception {
+        Review newReview =testReview();
+        Review newReview2 = new Review ("blah",4,1);
+        reviewDao.add(newReview);
+        reviewDao.add(newReview2);
+        List<Review> testReviews = reviewDao.findByCodeSchoolId(1);
+        assertEquals("Great",testReviews.get(0).getContent());
+        assertEquals(2,testReviews.size());
+    }
+
+    @Test
+    public void getReviewByCodeSchoolIdReturnsCorrectlyWhenEmpty_True() throws Exception {
+        List<Review> testReviews = reviewDao.findByCodeSchoolId(1);
+        assertEquals(0,testReviews.size());
+    }
+
 }
 

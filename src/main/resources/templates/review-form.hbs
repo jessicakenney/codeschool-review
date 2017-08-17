@@ -1,0 +1,43 @@
+{{#partial "content"}}
+
+    <!--{{#if editReview}}-->
+        <!--<h3>Edit Your Review Review</h3>-->
+        <!--<form action="/codeschools/{{editCodeSchool.id}}/update" method="post">-->
+            <!--<label for="name">Edit code School name</label>-->
+            <!--<input id="name" name="name" type="text" value="{{editCodeSchool.name}}">-->
+
+    <!--{{else}}-->
+            <h3>Add Review for{{ codeschool.name }} </h3>
+
+        <form action="/codeschools/{{ codeschool.id }}/reviews" method="post">
+            <label for="content">Review</label>
+            <input id="content" name="content" type="text">
+    <br>
+            <label for="rating">5 Star Rating</label>
+            <input id="rating" name="rating" type="text">
+
+            <!--{{/if}}-->
+        <button type="submit" class="btn btn-default">Add</button>
+    </form>
+
+    {{#if reviews}}
+        {{#each reviews }}
+            <div class="col-md-4">
+                <div class = "well">
+                    <h3>Rating : {{ rating }} </h3>
+                    <p>{{ content }} </p>
+                    <br>
+                    <!--<a href="/codeschools/{{ id }}">...edit</a>-->
+                    <br>
+                </div>
+            </div>
+
+        {{/each}}
+    {{else}}
+        <p>No reviews</p>
+    {{/if}}
+
+
+{{/partial}}
+
+{{> layout.hbs}}

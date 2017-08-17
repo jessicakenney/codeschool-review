@@ -17,8 +17,10 @@ import java.util.List;
 
         Review findById(int id);
 
+        List<Review> findByCodeSchoolId(int codeSchoolId);
+
         //update
-        void update(int id, String content, int rating);
+        void update(int id, String content, int rating, int codeSchoolId);
 
         //delete
         void deleteById(int id);

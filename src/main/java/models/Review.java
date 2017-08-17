@@ -8,10 +8,12 @@ public class Review {
         private String content;
         private int rating;
         private int id;
+        private int codeSchoolId;
 
-        public Review(String content, int rating) {
+        public Review(String content, int rating, int codeSchoolId) {
             this.content = content;
             this.rating = rating;
+            this.codeSchoolId = codeSchoolId;
         }
 
         public String getContent() {
@@ -30,8 +32,16 @@ public class Review {
             this.id = id;
         }
 
-    public int getRating() {
-        return rating;
+        public int getRating() {
+            return rating;
+        }
+
+    public int getCodeSchoolId() {
+        return codeSchoolId;
+    }
+
+    public void setCodeSchoolId(int codeSchoolId) {
+        this.codeSchoolId = codeSchoolId;
     }
 
     @Override
@@ -41,14 +51,18 @@ public class Review {
 
         Review review = (Review) o;
 
+        if (rating != review.rating) return false;
         if (id != review.id) return false;
+        if (codeSchoolId != review.codeSchoolId) return false;
         return content.equals(review.content);
     }
 
     @Override
     public int hashCode() {
         int result = content.hashCode();
+        result = 31 * result + rating;
         result = 31 * result + id;
+        result = 31 * result + codeSchoolId;
         return result;
     }
 }

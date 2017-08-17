@@ -7,5 +7,6 @@ CREATE TABLE IF NOT EXISTS codeschools (
 CREATE TABLE IF NOT EXISTS reviews (
   id int PRIMARY KEY auto_increment,
   content VARCHAR,
-  rating INT
+  rating INTEGER,
+  codeschoolid INTEGER
 );

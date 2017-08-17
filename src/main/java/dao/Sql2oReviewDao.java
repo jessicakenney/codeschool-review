@@ -17,13 +17,22 @@ public class Sql2oReviewDao implements ReviewDao {
 
     @Override
     public void add(Review review) {
-        String sql = "INSERT INTO reviews (content, rating) VALUES (:content, :rating)"; //raw sql
+        String sql = "INSERT INTO reviews (content,rating,codeschoolid) VALUES (:content,:rating,:codeschoolid)"; //raw sql
         try(Connection conn = sql2o.open()){ //try to open a connection
             int id = (int) conn.createQuery(sql) //make a new variable
-                    .bind(review) //map my argument onto the query so we can use information from it
+                    .addParameter("content", review.getContent())
+                    .addParameter("rating", review.getRating())
+                    .addParameter("codeschoolid",review.getCodeSchoolId())
+                    .addColumnMapping("CONTENT", "content")
+                    .addColumnMapping("RATING", "rating")
+                    .addColumnMapping("CODESCHOOLID","codeschoolid")
                     .executeUpdate() //run it all
                     .getKey(); //int id is now the row number (row “key”) of db
             review.setId(id); //update object to set id now from database
+//                    .bind(review) //map my argument onto the query so we can use information from it
+//                    .executeUpdate() //run it all
+//                    .getKey(); //int id is now the row number (row “key”) of db
+//            review.setId(id); //update object to set id now from database
         } catch (Sql2oException ex) {
             System.out.println(ex); //oops we have an error!
         }
@@ -38,13 +47,14 @@ public class Sql2oReviewDao implements ReviewDao {
     }
 
     @Override
-    public void  update(int id,String newContent, int newRating) {
-        String sql = "UPDATE reviews SET content = :content, rating = :rating WHERE id = :id";
+    public void  update(int id,String newContent, int newRating, int codeSchoolId) {
+        String sql = "UPDATE reviews SET content = :content, rating = :rating, codeschoolid = :codeschoolid WHERE id = :id";
         try(Connection con = sql2o.open()) {
             con.createQuery(sql)
                     .addParameter("content", newContent)
                     .addParameter("id", id)
                     .addParameter("rating", newRating)
+                    .addParameter("codeschoolid",codeSchoolId)
                     .executeUpdate();
         } catch (Sql2oException ex) {
             System.out.println(ex);
@@ -58,6 +68,15 @@ public class Sql2oReviewDao implements ReviewDao {
             return con.createQuery("SELECT * FROM reviews WHERE id = :id")
                     .addParameter("id", id) //key/value pair, key must match above
                     .executeAndFetchFirst(Review.class); //fetch an individual item
+        }
+    }
+
+    @Override
+    public List<Review> findByCodeSchoolId(int codeschoolid) {
+        try(Connection con = sql2o.open()){
+            return con.createQuery("SELECT * FROM reviews WHERE codeschoolid = :codeschoolid")
+                    .addParameter("codeschoolid", codeschoolid) //key/value pair, key must match above
+                    .executeAndFetch(Review.class); //fetch all the reviews per codeSchool
         }
     }
 
